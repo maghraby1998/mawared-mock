@@ -1,0 +1,26 @@
+POST http://localhost:5000/company
+Content-Type: application/json
+
+{
+    "name": "second company name"
+}
+
+### find one company by id 
+
+GET http://localhost:5000/company/2 HTTP/1.1
+
+### find all companies with name filter
+GET http://localhost:5000/company?name=sec HTTP/1.1
+
+### create office and attach company to it
+POST http://localhost:5000/office HTTP/1.1
+Content-Type: application/json
+
+{
+    "name" :"office name 3",
+    "address": "office address name 3",
+    "companyId": 2
+}
+
+### find one office with id
+GET http://localhost:5000/office/1 HTTP/1.1
