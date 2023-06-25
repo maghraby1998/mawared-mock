@@ -14,11 +14,14 @@ export class OfficeController {
   constructor(private officeService: OfficeService) {}
 
   @Post()
-  createOffice(@Body() { companyId, ...body }: CreateOfficeDto) {
+  createOffice(@Body() { companyId, currencyId, ...body }: CreateOfficeDto) {
     return this.officeService.create({
       ...body,
       company: {
         connect: { id: companyId },
+      },
+      curreny: {
+        connect: { id: currencyId },
       },
     });
   }

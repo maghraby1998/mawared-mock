@@ -9,4 +9,7 @@ export class CreateOfficeDto {
 
   @IsNumber()
   companyId: number;
+
+  @IsNumber()
+  currencyId: number;
 }
