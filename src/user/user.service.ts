@@ -32,4 +32,12 @@ export class UserService {
       },
     });
   }
+
+  findUsersByEmail(email: string) {
+    return this.prisma.user.findMany({
+      where: {
+        email,
+      },
+    });
+  }
 }

@@ -1,9 +1,10 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { SignInUserDto } from './dtos/sign-in-user.dto';
 import { CreateUserTypeDto } from './dtos/create-user-type.dto';
+import { AuthGuard } from 'src/guards/auth.guard';
 
 @Controller('user')
 export class UserController {
@@ -12,9 +13,10 @@ export class UserController {
     private userService: UserService,
   ) {}
 
-  @Post('/signup')
-  signUp(@Body() body: CreateUserDto) {
-    return this.authService.signUp(body);
+  @Post('/create')
+  @UseGuards(AuthGuard)
+  createUser(@Body() body: CreateUserDto) {
+    return this.authService.createUser(body);
   }
 
   @Post('/signin')
@@ -23,6 +25,7 @@ export class UserController {
   }
 
   @Post('/user-type')
+  @UseGuards(AuthGuard)
   createUserType(@Body() body: CreateUserTypeDto) {
     return this.userService.createUserType(body.name);
   }

@@ -18,6 +18,10 @@ export class CreateUserDto {
   password: string;
 
   @IsNumber()
-  // @IsOptional()
+  @IsOptional()
   managerId: number;
+
+  @IsNumber()
+  @IsOptional()
+  companyId: number;
 }

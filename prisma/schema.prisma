@@ -15,12 +15,14 @@ model User {
   name              String
   email             String
   password          String
-  managerId         Int
-  manager           User     @relation("managedUser", fields: [managerId], references: [id])
+  managerId         Int?
+  manager           User?    @relation("managedUser", fields: [managerId], references: [id])
   managed           User[]   @relation("managedUser")
   isBusinessPartner Boolean? @default(false)
   userTypeId        Int
   userType          UserType @relation(fields: [userTypeId], references: [id])
+  companyId         Int?
+  company           Company? @relation(fields: [companyId], references: [id])
 }
 
 model UserType {
@@ -35,6 +37,7 @@ model Company {
   offices     Office[]
   departments Department[]
   positions   Position[]
+  users       User[]
 }
 
 model Office {
