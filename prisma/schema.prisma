@@ -39,6 +39,7 @@ model Company {
   departments Department[]
   positions   Position[]
   users       User[]
+  currencies  Currency[]
 }
 
 model Office {
@@ -68,7 +69,10 @@ model Position {
 }
 
 model Currency {
-  id      Int      @id @default(autoincrement())
-  name    String
-  offices Office[]
+  id        Int      @id @default(autoincrement())
+  name      String
+  symbol    String
+  companyId Int
+  company   Company  @relation(fields: [companyId], references: [id])
+  offices   Office[]
 }

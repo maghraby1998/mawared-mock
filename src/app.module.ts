@@ -8,6 +8,7 @@ import { CompanyModule } from './company/company.module';
 import { UserModule } from './user/user.module';
 import { AuthMiddleWare } from './middlewares/auth.middleware';
 import { JwtService } from '@nestjs/jwt';
+import { CurrencyModule } from './currency/currency.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { JwtService } from '@nestjs/jwt';
     PositionModule,
     CompanyModule,
     UserModule,
+    CurrencyModule,
   ],
   controllers: [AppController],
   providers: [AppService, JwtService],
