@@ -1,10 +1,12 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { SignInUserDto } from './dtos/sign-in-user.dto';
 import { CreateUserTypeDto } from './dtos/create-user-type.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
+import { Auth } from 'src/decorators/auth.decorator';
+import { User } from '@prisma/client';
 
 @Controller('user')
 export class UserController {
@@ -15,8 +17,8 @@ export class UserController {
 
   @Post('/create')
   @UseGuards(AuthGuard)
-  createUser(@Body() body: CreateUserDto) {
-    return this.authService.createUser(body);
+  createUser(@Body() body: CreateUserDto, @Auth() auth: User) {
+    return this.authService.createUser(body, auth);
   }
 
   @Post('/signin')
@@ -28,5 +30,10 @@ export class UserController {
   @UseGuards(AuthGuard)
   createUserType(@Body() body: CreateUserTypeDto) {
     return this.userService.createUserType(body.name);
+  }
+
+  @Get('/test')
+  testMethod(@Auth() auth: User) {
+    return auth;
   }
 }

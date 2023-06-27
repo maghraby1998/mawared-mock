@@ -23,8 +23,6 @@ export class AuthGuard implements CanActivate {
         secret: 'randomsecretfornow',
       });
 
-      console.log(payload);
-
       if (payload) {
         return true;
       } else {

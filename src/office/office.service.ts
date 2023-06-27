@@ -1,14 +1,19 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 import { PrismaService } from 'src/prisma.service';
+import { CreateOfficeDto } from './dtos/create-office.dto';
 
 @Injectable()
 export class OfficeService {
   constructor(private prisma: PrismaService) {}
 
-  create(office: Prisma.OfficeCreateInput) {
+  create({ currencyId, ...officeInput }: CreateOfficeDto, auth: User) {
     return this.prisma.office.create({
-      data: office,
+      data: {
+        ...officeInput,
+        company: { connect: { id: auth.companyId } },
+        curreny: { connect: { id: currencyId } },
+      },
     });
   }
 

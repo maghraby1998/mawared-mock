@@ -15,9 +15,6 @@ export class CompanyService {
   findOne(id: number) {
     return this.prisma.company.findUnique({
       where: { id },
-      include: {
-        offices: true,
-      },
     });
   }
 

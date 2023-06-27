@@ -11,18 +11,19 @@ datasource db {
 }
 
 model User {
-  id                Int      @id @default(autoincrement())
+  id                Int          @id @default(autoincrement())
   name              String
   email             String
   password          String
   managerId         Int?
-  manager           User?    @relation("managedUser", fields: [managerId], references: [id])
-  managed           User[]   @relation("managedUser")
-  isBusinessPartner Boolean? @default(false)
+  manager           User?        @relation("managedUser", fields: [managerId], references: [id])
+  managed           User[]       @relation("managedUser")
+  isBusinessPartner Boolean?     @default(false)
   userTypeId        Int
-  userType          UserType @relation(fields: [userTypeId], references: [id])
+  userType          UserType     @relation(fields: [userTypeId], references: [id])
   companyId         Int?
-  company           Company? @relation(fields: [companyId], references: [id])
+  company           Company?     @relation(fields: [companyId], references: [id])
+  departments       Department[]
 }
 
 model UserType {
@@ -55,10 +56,13 @@ model Department {
   name      String
   company   Company @relation(fields: [companyId], references: [id])
   companyId Int
+  managerId Int?
+  manager   User?   @relation(fields: [managerId], references: [id])
 }
 
 model Position {
   id        Int     @id @default(autoincrement())
+  name      String
   company   Company @relation(fields: [companyId], references: [id])
   companyId Int
 }

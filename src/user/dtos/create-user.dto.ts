@@ -20,8 +20,4 @@ export class CreateUserDto {
   @IsNumber()
   @IsOptional()
   managerId: number;
-
-  @IsNumber()
-  @IsOptional()
-  companyId: number;
 }

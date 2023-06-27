@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { OfficeModule } from './office/office.module';
@@ -6,10 +6,22 @@ import { DepartmentModule } from './department/department.module';
 import { PositionModule } from './position/position.module';
 import { CompanyModule } from './company/company.module';
 import { UserModule } from './user/user.module';
+import { AuthMiddleWare } from './middlewares/auth.middleware';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
-  imports: [OfficeModule, DepartmentModule, PositionModule, CompanyModule, UserModule],
+  imports: [
+    OfficeModule,
+    DepartmentModule,
+    PositionModule,
+    CompanyModule,
+    UserModule,
+  ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, JwtService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(AuthMiddleWare).forRoutes('*');
+  }
+}

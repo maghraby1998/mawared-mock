@@ -8,8 +8,5 @@ export class CreateOfficeDto {
   address: string;
 
   @IsNumber()
-  companyId: number;
-
-  @IsNumber()
   currencyId: number;
 }

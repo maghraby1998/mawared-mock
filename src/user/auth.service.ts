@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { UserService } from './user.service';
-import { Prisma } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 import { CreateUserDto } from './dtos/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
@@ -22,7 +22,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async createUser({ managerId, companyId, ...userInput }: CreateUserDto) {
+  async createUser({ managerId, ...userInput }: CreateUserDto, auth: User) {
     if (managerId) {
       const manager = await this.userService.fineOne(managerId);
       if (!manager) {
@@ -31,6 +31,7 @@ export class AuthService {
         );
       }
     }
+
     const saltOrRounds = 10;
     const hash = await bcrypt.hash(userInput.password, saltOrRounds);
 
@@ -46,10 +47,10 @@ export class AuthService {
           },
         },
       }),
-      ...(companyId && {
+      ...(auth.companyId && {
         company: {
           connect: {
-            id: companyId,
+            id: auth.companyId ?? undefined,
           },
         },
       }),
