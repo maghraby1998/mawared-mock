@@ -13,7 +13,7 @@ export class AuthMiddleWare implements NestMiddleware {
   async use(req: any, res: never, next: NextFunction) {
     const [type, token] = req.headers.authorization?.split(' ') ?? [];
 
-    const payload = (await this.jwtService.decode(token)) as { userId: number };
+    const payload = this.jwtService.decode(token) as { userId: number };
 
     if (payload) {
       let { userId } = payload;

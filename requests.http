@@ -1,5 +1,6 @@
 POST http://localhost:5000/company
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTY4NzgyNDg4OCwiZXhwIjoxNjg4ODI0ODg4fQ.pn-jCTUB4NjZG3yh8eDA3RLdZRnC7UbarPnjM5hT6ZQ
 
 {
     "name": "second company name"

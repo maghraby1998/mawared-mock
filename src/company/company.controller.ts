@@ -6,11 +6,14 @@ import {
   ParseIntPipe,
   Post,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { CompanyService } from './company.service';
 import { CreateCompanyDto } from './dtos/create-company.dto';
+import { SuperGuard } from 'src/guards/super.guard';
 
 @Controller('company')
+@UseGuards(SuperGuard)
 export class CompanyController {
   constructor(private companyService: CompanyService) {}
 

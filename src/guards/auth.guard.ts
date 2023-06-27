@@ -15,7 +15,7 @@ export class AuthGuard implements CanActivate {
 
     const [type, token] = request?.headers?.authorization?.split(' ') ?? [];
     if (type !== 'Bearer') {
-      throw new UnauthorizedException('type not bearer');
+      throw new UnauthorizedException();
     }
 
     try {
@@ -26,11 +26,11 @@ export class AuthGuard implements CanActivate {
       if (payload) {
         return true;
       } else {
-        throw new UnauthorizedException('no payload');
+        throw new UnauthorizedException();
       }
     } catch (error) {
       console.log(error);
-      throw new UnauthorizedException('catch');
+      throw new UnauthorizedException();
     }
   }
 }

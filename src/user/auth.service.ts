@@ -8,12 +8,7 @@ import { Prisma, User } from '@prisma/client';
 import { CreateUserDto } from './dtos/create-user.dto';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-
-enum UserType {
-  SUPER = 1,
-  OWNER = 2,
-  EMPLOYEE = 3,
-}
+import { UserTypeEnum } from 'src/enums/enums';
 
 @Injectable()
 export class AuthService {
@@ -39,7 +34,7 @@ export class AuthService {
 
     return this.userService.create({
       ...userInput,
-      userType: { connect: { id: UserType.EMPLOYEE } },
+      userType: { connect: { id: UserTypeEnum.EMPLOYEE } },
       ...(managerId && {
         manager: {
           connect: {
