@@ -17,7 +17,7 @@ export class AuthMiddleWare implements NestMiddleware {
 
     if (payload) {
       let { userId } = payload;
-      const user = await this.userService.fineOne(userId);
+      const user = await this.userService.findOne(userId);
       req.auth = user;
       next();
       return;

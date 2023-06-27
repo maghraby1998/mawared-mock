@@ -23,7 +23,7 @@ export class SuperGuard implements CanActivate {
     const payload = this.jwtService.decode(token) as { userId: number };
 
     if (payload) {
-      const user = await this.userService.fineOne(payload.userId);
+      const user = await this.userService.findOne(payload.userId);
       if (user.userTypeId === UserTypeEnum.SUPER) {
         return true;
       } else {

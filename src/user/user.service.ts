@@ -17,10 +17,17 @@ export class UserService {
     });
   }
 
-  fineOne(id: number) {
+  findOne(id: number) {
     return this.prisma.user.findUnique({
       where: {
         id,
+      },
+      include: {
+        userType: {
+          select: {
+            name: true,
+          },
+        },
       },
     });
   }

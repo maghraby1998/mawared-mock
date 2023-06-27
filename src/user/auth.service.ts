@@ -19,7 +19,7 @@ export class AuthService {
 
   async createUser({ managerId, ...userInput }: CreateUserDto, auth: User) {
     if (managerId) {
-      const manager = await this.userService.fineOne(managerId);
+      const manager = await this.userService.findOne(managerId);
       if (!manager) {
         throw new NotFoundException(
           `couldn't find manager with an id of ${managerId}`,
