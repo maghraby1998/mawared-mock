@@ -1,6 +1,21 @@
-import { IsString } from 'class-validator';
+import { Type } from 'class-transformer';
+import {
+  ArrayMaxSize,
+  ArrayMinSize,
+  IsArray,
+  IsString,
+  ValidateNested,
+} from 'class-validator';
+import { CreateBusinessPartnerDto } from 'src/user/dtos/create-business-partner.dto';
 
 export class CreateCompanyDto {
   @IsString()
   name: string;
+
+  @IsArray()
+  @ValidateNested({ each: true })
+  @ArrayMinSize(1)
+  @ArrayMaxSize(5)
+  @Type(() => CreateBusinessPartnerDto)
+  businessPartners: CreateBusinessPartnerDto[];
 }

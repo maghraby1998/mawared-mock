@@ -45,6 +45,13 @@ export class UserService {
       where: {
         email,
       },
+      include: {
+        userType: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
   }
 }

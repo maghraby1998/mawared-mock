@@ -11,6 +11,8 @@ import {
 import { CompanyService } from './company.service';
 import { CreateCompanyDto } from './dtos/create-company.dto';
 import { SuperGuard } from 'src/guards/super.guard';
+import { Auth } from 'src/decorators/auth.decorator';
+import { User } from '@prisma/client';
 
 @Controller('company')
 @UseGuards(SuperGuard)
@@ -18,8 +20,8 @@ export class CompanyController {
   constructor(private companyService: CompanyService) {}
 
   @Post()
-  createCompany(@Body() body: CreateCompanyDto) {
-    return this.companyService.create(body);
+  createCompany(@Body() body: CreateCompanyDto, @Auth() auth: User) {
+    return this.companyService.create(body, auth);
   }
 
   @Get(':id')

@@ -22,8 +22,10 @@ export class UserController {
   }
 
   @Post('/signin')
-  signIn(@Body() body: SignInUserDto) {
-    return this.authService.signIn(body.email, body.password);
+  async signIn(@Body() body: SignInUserDto) {
+    const response = await this.authService.signIn(body.email, body.password);
+    delete response.user.password;
+    return response;
   }
 
   @Post('/user-type')
