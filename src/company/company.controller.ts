@@ -13,9 +13,11 @@ import { CreateCompanyDto } from './dtos/create-company.dto';
 import { SuperGuard } from 'src/guards/super.guard';
 import { Auth } from 'src/decorators/auth.decorator';
 import { User } from '@prisma/client';
+import { AuthGuard } from 'src/guards/auth.guard';
 
-@Controller('company')
 @UseGuards(SuperGuard)
+@UseGuards(AuthGuard)
+@Controller('company')
 export class CompanyController {
   constructor(private companyService: CompanyService) {}
 

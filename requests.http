@@ -29,7 +29,7 @@ GET http://localhost:5000/office/1 HTTP/1.1
 ### sign up user
 POST http://localhost:5000/user/create HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTY4NzgxOTg0NSwiZXhwIjoxNjg4ODE5ODQ1fQ.oe2EeAM8rl2gFzYccfxAJcGYncTz1ZLYzxw2nGKxGeI
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTY4NzgxOTg0NSwiZXhwIjoxNjg4ODE5ODQ1fQ.oe2EeAM8rl2gFzYccfxAJcGYncTz1ZLYzxw2nGKxGeI
 
 {
     "name" : "ahmed elmaghraby",
@@ -51,8 +51,8 @@ POST http://localhost:5000/user/signin HTTP/1.1
 Content-Type: application/json
 
 {
-    "email":"amaghraby@test.com",
-    "password":"12345678"
+    "email":"super@super.com",
+    "password":"123456"
 }
 ### test
 GET http://localhost:5000/user/test HTTP/1.1
