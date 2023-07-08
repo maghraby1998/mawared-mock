@@ -22,7 +22,7 @@ model User {
   userTypeId        Int
   userType          UserType     @relation(fields: [userTypeId], references: [id])
   companyId         Int?
-  company           Company?     @relation(fields: [companyId], references: [id])
+  company           Company?     @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   departments       Department[]
 }
 
