@@ -35,4 +35,9 @@ export class CompanyController {
   findAllCompanies(@Query('name') name: string) {
     return this.companyService.findAll(name);
   }
+
+  @Post(':id/delete')
+  deleteCompany(@Param('id', ParseIntPipe) id: number) {
+    return this.companyService.delete(id);
+  }
 }

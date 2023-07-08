@@ -41,6 +41,39 @@ export class CompanyService {
   findOne(id: number) {
     return this.prisma.company.findUnique({
       where: { id },
+      include: {
+        offices: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        departments: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        positions: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        currencies: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+        users: {
+          select: {
+            id: true,
+            name: true,
+            isBusinessPartner: true,
+          },
+        },
+      },
     });
   }
 
@@ -59,5 +92,9 @@ export class CompanyService {
         },
       },
     });
+  }
+
+  delete(id: number) {
+    return this.prisma.company.delete({ where: { id } });
   }
 }

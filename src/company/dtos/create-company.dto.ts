@@ -3,6 +3,7 @@ import {
   ArrayMaxSize,
   ArrayMinSize,
   IsArray,
+  IsNotEmpty,
   IsString,
   ValidateNested,
 } from 'class-validator';
@@ -10,6 +11,7 @@ import { CreateBusinessPartnerDto } from 'src/user/dtos/create-business-partner.
 
 export class CreateCompanyDto {
   @IsString()
+  @IsNotEmpty()
   name: string;
 
   @IsArray()
