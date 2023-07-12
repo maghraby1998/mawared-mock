@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
+import { UserTypeEnum } from 'src/enums/enums';
 import { PrismaService } from 'src/prisma.service';
 
 @Injectable()
@@ -47,6 +48,37 @@ export class UserService {
       },
       include: {
         userType: {
+          select: {
+            name: true,
+          },
+        },
+      },
+    });
+  }
+
+  findAllWithFilters(name: string, auth: User) {
+    return this.prisma.user.findMany({
+      where: {
+        name,
+        companyId: auth.companyId,
+        isBusinessPartner: false,
+        id: { not: auth.id },
+        userTypeId: {
+          not: UserTypeEnum.SUPER,
+        },
+      },
+      include: {
+        office: {
+          select: {
+            name: true,
+          },
+        },
+        department: {
+          select: {
+            name: true,
+          },
+        },
+        position: {
           select: {
             name: true,
           },

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dtos/create-user.dto';
@@ -34,8 +34,8 @@ export class UserController {
     return this.userService.createUserType(body.name);
   }
 
-  @Get('/test')
-  testMethod(@Auth() auth: User) {
-    return auth;
+  @Get('/')
+  findAllUsersWithFilters(@Query('name') name: string, @Auth() auth: User) {
+    return this.userService.findAllWithFilters(name, auth);
   }
 }

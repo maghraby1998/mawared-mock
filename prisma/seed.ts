@@ -29,6 +29,18 @@ async function main() {
         password: await bcrypt.hash('123456', 10),
         userTypeId: UserTypeEnum.SUPER,
       },
+      {
+        name: 'maghraby',
+        email: 'maghraby@gmail.com',
+        password: await bcrypt.hash('123456', 10),
+        userTypeId: UserTypeEnum.OWNER,
+      },
+      {
+        name: 'employee',
+        email: 'employee@employee.com',
+        password: await bcrypt.hash('123456', 10),
+        userTypeId: UserTypeEnum.EMPLOYEE,
+      },
     ],
   });
 }

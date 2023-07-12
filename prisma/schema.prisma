@@ -11,19 +11,25 @@ datasource db {
 }
 
 model User {
-  id                Int          @id @default(autoincrement())
-  name              String
-  email             String
-  password          String
-  managerId         Int?
-  manager           User?        @relation("managedUser", fields: [managerId], references: [id])
-  managed           User[]       @relation("managedUser")
-  isBusinessPartner Boolean?     @default(false)
-  userTypeId        Int
-  userType          UserType     @relation(fields: [userTypeId], references: [id])
-  companyId         Int?
-  company           Company?     @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  departments       Department[]
+  id                 Int          @id @default(autoincrement())
+  name               String
+  email              String
+  password           String
+  managerId          Int?
+  manager            User?        @relation("managedUser", fields: [managerId], references: [id])
+  managed            User[]       @relation("managedUser")
+  isBusinessPartner  Boolean?     @default(false)
+  userTypeId         Int
+  userType           UserType     @relation(fields: [userTypeId], references: [id])
+  companyId          Int?
+  company            Company?     @relation(fields: [companyId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  managedDepartments Department[] @relation("department_manager")
+  departmentId       Int?
+  department         Department?  @relation("user_department", fields: [departmentId], references: [id])
+  officeId           Int?
+  office             Office?      @relation(fields: [officeId], references: [id])
+  positionId         Int?
+  position           Position?    @relation(fields: [positionId], references: [id])
 }
 
 model UserType {
@@ -50,6 +56,7 @@ model Office {
   company    Company  @relation(fields: [companyId], references: [id])
   currencyId Int
   curreny    Currency @relation(fields: [currencyId], references: [id])
+  users      User[]
 }
 
 model Department {
@@ -58,7 +65,8 @@ model Department {
   company   Company @relation(fields: [companyId], references: [id])
   companyId Int
   managerId Int?
-  manager   User?   @relation(fields: [managerId], references: [id])
+  manager   User?   @relation("department_manager", fields: [managerId], references: [id])
+  users     User[]  @relation("user_department")
 }
 
 model Position {
@@ -66,6 +74,7 @@ model Position {
   name      String
   company   Company @relation(fields: [companyId], references: [id])
   companyId Int
+  users     User[]
 }
 
 model Currency {
