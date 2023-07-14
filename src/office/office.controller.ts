@@ -5,6 +5,7 @@ import {
   Param,
   ParseIntPipe,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { OfficeService } from './office.service';
@@ -26,5 +27,13 @@ export class OfficeController {
   @Get(':id')
   findOneOffice(@Param('id', ParseIntPipe) id: number) {
     return this.officeService.findOne(id);
+  }
+
+  @Get()
+  findManyOfficesWithNameFilter(
+    @Query('name') name: string,
+    @Auth() auth: User,
+  ) {
+    return this.officeService.findManyWithNameFilter(name, auth);
   }
 }

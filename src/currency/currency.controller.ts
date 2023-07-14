@@ -11,8 +11,8 @@ export class CurrencyController {
   constructor(private currencyService: CurrencyService) {}
 
   @Post()
-  createCurrency(@Body() body: CreateCurrencyDto, @Auth() auth: User) {
-    return this.currencyService.create(body.name, body.symbol, auth);
+  createCurrency(@Body() body: CreateCurrencyDto) {
+    return this.currencyService.create(body.name, body.symbol);
   }
 
   @Get()

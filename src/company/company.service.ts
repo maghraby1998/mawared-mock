@@ -60,12 +60,6 @@ export class CompanyService {
             name: true,
           },
         },
-        currencies: {
-          select: {
-            id: true,
-            name: true,
-          },
-        },
         users: {
           select: {
             id: true,

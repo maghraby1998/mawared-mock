@@ -12,7 +12,7 @@ export class OfficeService {
       data: {
         ...officeInput,
         company: { connect: { id: auth.companyId } },
-        curreny: { connect: { id: currencyId } },
+        currency: { connect: { id: currencyId } },
       },
     });
   }
@@ -23,6 +23,12 @@ export class OfficeService {
       include: {
         company: true,
       },
+    });
+  }
+
+  findManyWithNameFilter(name: string, auth: User) {
+    return this.prisma.office.findMany({
+      where: { name, companyId: auth.companyId },
     });
   }
 }

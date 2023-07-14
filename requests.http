@@ -29,21 +29,19 @@ GET http://localhost:5000/office/1 HTTP/1.1
 ### sign up user
 POST http://localhost:5000/user/create HTTP/1.1
 Content-Type: application/json
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjIsImlhdCI6MTY4NzgxOTg0NSwiZXhwIjoxNjg4ODE5ODQ1fQ.oe2EeAM8rl2gFzYccfxAJcGYncTz1ZLYzxw2nGKxGeI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY4ODYxNDA3MiwiZXhwIjoxNjg5NjE0MDcyfQ.VjU8GeME2UrHE3YYGjhW108T9tAmG8PWBuP9zeUyZQQ
 
 {
-    "name" : "ahmed elmaghraby",
-    "email":"amaghraby@test.com",
-    "password": "12345678"
+   
 }
 
 ### create user type
 POST http://localhost:5000/user/user-type HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY4NzgwMzgxNCwiZXhwIjoxNjg4ODAzODE0fQ.UtmgHCkDx1018lNOtCpwtr8Jl_oTPUV40PhmXGg9gXo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTY4ODYxMzIyNiwiZXhwIjoxNjg5NjEzMjI2fQ.WGD1LaiJVGx0l-NdDLiWoetGHFmpfuvrbqqWb4qBA4I
 
 {
-    "name": "employee"
+    
 }
 
 ### sign in

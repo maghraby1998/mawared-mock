@@ -6,16 +6,11 @@ import { PrismaService } from 'src/prisma.service';
 export class CurrencyService {
   constructor(private prisma: PrismaService) {}
 
-  create(name: string, symbol: string, auth: User) {
+  create(name: string, symbol: string) {
     return this.prisma.currency.create({
       data: {
         name,
         symbol,
-        company: {
-          connect: {
-            id: auth.companyId,
-          },
-        },
       },
     });
   }

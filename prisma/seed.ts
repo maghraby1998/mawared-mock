@@ -5,6 +5,15 @@ import { UserTypeEnum } from '../src/enums/enums';
 const prisma = new PrismaClient();
 
 async function main() {
+  const companies = await prisma.company.createMany({
+    data: [
+      {
+        id: 1,
+        name: 'maghraby company',
+      },
+    ],
+  });
+
   const userTypes = await prisma.userType.createMany({
     data: [
       {
@@ -34,12 +43,35 @@ async function main() {
         email: 'maghraby@gmail.com',
         password: await bcrypt.hash('123456', 10),
         userTypeId: UserTypeEnum.OWNER,
+        companyId: 1,
+        isBusinessPartner: true,
       },
       {
         name: 'employee',
         email: 'employee@employee.com',
         password: await bcrypt.hash('123456', 10),
         userTypeId: UserTypeEnum.EMPLOYEE,
+        companyId: 1,
+      },
+    ],
+  });
+
+  const currencies = await prisma.currency.createMany({
+    data: [
+      {
+        id: 1,
+        name: 'EGP',
+        symbol: '£',
+      },
+      {
+        id: 2,
+        name: 'USD',
+        symbol: '$',
+      },
+      {
+        id: 3,
+        name: 'EUR',
+        symbol: '€',
       },
     ],
   });

@@ -45,7 +45,6 @@ model Company {
   departments Department[]
   positions   Position[]
   users       User[]
-  currencies  Currency[]
 }
 
 model Office {
@@ -54,9 +53,9 @@ model Office {
   address    String
   companyId  Int
   company    Company  @relation(fields: [companyId], references: [id])
-  currencyId Int
-  curreny    Currency @relation(fields: [currencyId], references: [id])
   users      User[]
+  currencyId Int
+  currency   Currency @relation(fields: [currencyId], references: [id])
 }
 
 model Department {
@@ -78,10 +77,8 @@ model Position {
 }
 
 model Currency {
-  id        Int      @id @default(autoincrement())
-  name      String
-  symbol    String
-  companyId Int
-  company   Company  @relation(fields: [companyId], references: [id])
-  offices   Office[]
+  id      Int      @id @default(autoincrement())
+  name    String
+  symbol  String
+  offices Office[]
 }
