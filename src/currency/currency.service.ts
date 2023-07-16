@@ -15,15 +15,9 @@ export class CurrencyService {
     });
   }
 
-  findCurrenciesForCompany(currencyName: string, companyId: number) {
-    if (currencyName) {
-      return this.prisma.currency.findMany({
-        where: { id: companyId, name: currencyName },
-      });
-    } else {
-      return this.prisma.currency.findMany({
-        where: { id: companyId },
-      });
-    }
+  findCurrenciesForCompany(currencyName: string) {
+    return this.prisma.currency.findMany({
+      where: { name: currencyName },
+    });
   }
 }

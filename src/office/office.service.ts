@@ -28,7 +28,19 @@ export class OfficeService {
 
   findManyWithNameFilter(name: string, auth: User) {
     return this.prisma.office.findMany({
-      where: { name, companyId: auth.companyId },
+      where: {
+        name: {
+          contains: name,
+        },
+        companyId: auth.companyId,
+      },
+      include: {
+        currency: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
   }
 }

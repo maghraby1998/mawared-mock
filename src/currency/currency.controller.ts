@@ -16,7 +16,7 @@ export class CurrencyController {
   }
 
   @Get()
-  findAllCurrenciesForCompany(@Query('name') name: string, @Auth() auth: User) {
-    return this.currencyService.findCurrenciesForCompany(name, auth.companyId);
+  findAllCurrenciesForCompany(@Query('name') name: string) {
+    return this.currencyService.findCurrenciesForCompany(name);
   }
 }
