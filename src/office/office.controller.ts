@@ -24,6 +24,11 @@ export class OfficeController {
     return this.officeService.create(body, auth);
   }
 
+  @Get('/options')
+  getCompanyOffices(@Auth() auth: User) {
+    return this.officeService.getCompanyOffices(auth.companyId);
+  }
+
   @Get(':id')
   findOneOffice(@Param('id', ParseIntPipe) id: number) {
     return this.officeService.findOne(id);

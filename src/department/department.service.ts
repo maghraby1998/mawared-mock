@@ -41,4 +41,16 @@ export class DepartmentService {
       return this.prisma.department.findMany();
     }
   }
+
+  getCompanyDepartments(companyId: number) {
+    return this.prisma.department.findMany({
+      where: {
+        companyId,
+      },
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+  }
 }

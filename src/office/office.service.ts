@@ -43,4 +43,16 @@ export class OfficeService {
       },
     });
   }
+
+  getCompanyOffices(companyId: number) {
+    return this.prisma.office.findMany({
+      where: {
+        companyId,
+      },
+      select: {
+        id: true,
+        name: true,
+      },
+    });
+  }
 }

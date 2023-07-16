@@ -25,6 +25,11 @@ export class DepartmentController {
     return this.departmentService.create(body.name, body.managerId, auth);
   }
 
+  @Get('/options')
+  getCompanyDepartments(@Auth() auth: User) {
+    return this.departmentService.getCompanyDepartments(auth.companyId);
+  }
+
   @Get(':id')
   async findDepartmentById(@Param('id', ParseIntPipe) id: number) {
     const department = await this.departmentService.findOne(id);
