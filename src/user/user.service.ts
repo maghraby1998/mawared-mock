@@ -86,4 +86,24 @@ export class UserService {
       },
     });
   }
+
+  getAllManagers(companyId) {
+    return this.prisma.user.findMany({
+      where: {
+        companyId,
+        OR: [
+          { isBusinessPartner: true },
+          {
+            managed: {
+              some: {
+                id: {
+                  not: undefined,
+                },
+              },
+            },
+          },
+        ],
+      },
+    });
+  }
 }

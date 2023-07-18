@@ -23,13 +23,14 @@ export class PositionService {
     return this.prisma.position.findUnique({ where: { id } });
   }
 
-  findByCompanyId(companyId: number) {
-    if (companyId) {
-      return this.prisma.position.findMany({
-        where: { companyId },
-      });
-    } else {
-      return this.prisma.position.findMany();
-    }
+  findPositionsWithNameFilter(name: string, companyId: number) {
+    return this.prisma.position.findMany({
+      where: {
+        name: {
+          contains: name,
+        },
+        companyId,
+      },
+    });
   }
 }

@@ -30,7 +30,10 @@ export class PositionController {
   }
 
   @Get()
-  findPositionsByCompanyId(@Query('companyId') companyId: string) {
-    return this.positionService.findByCompanyId(+companyId);
+  findPositionsWithNameFilter(@Query('name') name: string, @Auth() auth: User) {
+    return this.positionService.findPositionsWithNameFilter(
+      name,
+      auth.companyId,
+    );
   }
 }

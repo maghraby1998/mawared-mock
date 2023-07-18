@@ -38,4 +38,9 @@ export class UserController {
   findAllUsersWithFilters(@Query('name') name: string, @Auth() auth: User) {
     return this.userService.findAllWithFilters(name, auth);
   }
+
+  @Get('/managers')
+  getAllManagers(@Auth() auth: User) {
+    return this.userService.getAllManagers(auth.companyId);
+  }
 }

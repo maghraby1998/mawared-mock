@@ -30,19 +30,26 @@ export class DepartmentService {
     return this.prisma.department.findUnique({ where: { id } });
   }
 
-  findByCompanyIdFilter(companyId: number) {
-    if (companyId) {
-      return this.prisma.department.findMany({
-        where: {
-          companyId,
+  findWithNameFilter(name: string, companyId: number) {
+    return this.prisma.department.findMany({
+      where: {
+        name: {
+          contains: name,
         },
-      });
-    } else {
-      return this.prisma.department.findMany();
-    }
+        companyId,
+      },
+      include: {
+        manager: {
+          select: {
+            id: true,
+            name: true,
+          },
+        },
+      },
+    });
   }
 
-  getCompanyDepartments(companyId: number) {
+  getCompanyDepartmentsOptions(companyId: number) {
     return this.prisma.department.findMany({
       where: {
         companyId,

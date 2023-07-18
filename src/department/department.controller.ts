@@ -26,8 +26,8 @@ export class DepartmentController {
   }
 
   @Get('/options')
-  getCompanyDepartments(@Auth() auth: User) {
-    return this.departmentService.getCompanyDepartments(auth.companyId);
+  getCompanyDepartmentsOptions(@Auth() auth: User) {
+    return this.departmentService.getCompanyDepartmentsOptions(auth.companyId);
   }
 
   @Get(':id')
@@ -42,7 +42,10 @@ export class DepartmentController {
   }
 
   @Get()
-  findDepartmentsByCompanyIdFilter(@Query('companyId') companyId: string) {
-    return this.departmentService.findByCompanyIdFilter(parseInt(companyId));
+  findDepartmentsWithNameFilter(
+    @Query('name') name: string,
+    @Auth() auth: User,
+  ) {
+    return this.departmentService.findWithNameFilter(name, auth.companyId);
   }
 }
