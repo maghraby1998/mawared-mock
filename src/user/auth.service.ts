@@ -17,7 +17,19 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async createUser({ managerId, ...userInput }: CreateUserDto, auth: User) {
+  async createUser(
+    {
+      managerId,
+      name,
+      email,
+      departmentId,
+      password,
+      officeId,
+      positionId,
+    }: CreateUserDto,
+    auth: User,
+    image: Express.Multer.File,
+  ) {
     if (managerId) {
       const manager = await this.userService.findOne(managerId);
       if (!manager) {
@@ -28,12 +40,16 @@ export class AuthService {
     }
 
     const saltOrRounds = 10;
-    const hash = await bcrypt.hash(userInput.password, saltOrRounds);
-
-    userInput.password = hash;
+    const hash = await bcrypt.hash(password, saltOrRounds);
 
     return this.userService.create({
-      ...userInput,
+      name,
+      email,
+      password: hash,
+      office: { connect: { id: +officeId } },
+      department: { connect: { id: +departmentId } },
+      position: { connect: { id: +positionId } },
+      image_path: image.buffer.toString('base64'),
       userType: { connect: { id: UserTypeEnum.EMPLOYEE } },
       ...(managerId && {
         manager: {

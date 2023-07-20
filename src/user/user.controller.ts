@@ -1,4 +1,16 @@
-import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  FileTypeValidator,
+  Get,
+  MaxFileSizeValidator,
+  ParseFilePipe,
+  Post,
+  Query,
+  UploadedFile,
+  UseGuards,
+  UseInterceptors,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dtos/create-user.dto';
@@ -7,6 +19,8 @@ import { CreateUserTypeDto } from './dtos/create-user-type.dto';
 import { AuthGuard } from 'src/guards/auth.guard';
 import { Auth } from 'src/decorators/auth.decorator';
 import { User } from '@prisma/client';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 
 @Controller('user')
 export class UserController {
@@ -17,8 +31,19 @@ export class UserController {
 
   @Post('/create')
   @UseGuards(AuthGuard)
-  createUser(@Body() body: CreateUserDto, @Auth() auth: User) {
-    return this.authService.createUser(body, auth);
+  @UseInterceptors(FileInterceptor('image'))
+  createUser(
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [new FileTypeValidator({ fileType: 'image/jpeg' })],
+      }),
+    )
+    file: Express.Multer.File,
+    @Body()
+    body: CreateUserDto,
+    @Auth() auth: User,
+  ) {
+    return this.authService.createUser(body, auth, file);
   }
 
   @Post('/signin')
@@ -42,5 +67,30 @@ export class UserController {
   @Get('/managers')
   getAllManagers(@Auth() auth: User) {
     return this.userService.getAllManagers(auth.companyId);
+  }
+
+  @Post('upload')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './uploads',
+      }),
+    }),
+  )
+  async uploadFile(
+    @UploadedFile(
+      new ParseFilePipe({
+        validators: [
+          // new MaxFileSizeValidator({ maxSize: 10000 }),
+          new FileTypeValidator({ fileType: 'image/jpeg' }),
+        ],
+      }),
+    )
+    file: Express.Multer.File,
+    @Body() body,
+  ) {
+    // console.log(file);
+    // console.log(body.name);
+    return file.path;
   }
 }

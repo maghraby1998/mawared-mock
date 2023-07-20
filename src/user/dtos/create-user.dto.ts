@@ -20,4 +20,13 @@ export class CreateUserDto {
   @IsNumber()
   @IsOptional()
   managerId: number;
+
+  @IsString()
+  officeId: number;
+
+  @IsString()
+  departmentId: number;
+
+  @IsString()
+  positionId: number;
 }
