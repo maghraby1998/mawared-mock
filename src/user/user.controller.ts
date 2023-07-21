@@ -4,7 +4,9 @@ import {
   FileTypeValidator,
   Get,
   MaxFileSizeValidator,
+  Param,
   ParseFilePipe,
+  ParseIntPipe,
   Post,
   Query,
   UploadedFile,
@@ -69,28 +71,8 @@ export class UserController {
     return this.userService.getAllManagers(auth.companyId);
   }
 
-  @Post('upload')
-  @UseInterceptors(
-    FileInterceptor('file', {
-      storage: diskStorage({
-        destination: './uploads',
-      }),
-    }),
-  )
-  async uploadFile(
-    @UploadedFile(
-      new ParseFilePipe({
-        validators: [
-          // new MaxFileSizeValidator({ maxSize: 10000 }),
-          new FileTypeValidator({ fileType: 'image/jpeg' }),
-        ],
-      }),
-    )
-    file: Express.Multer.File,
-    @Body() body,
-  ) {
-    // console.log(file);
-    // console.log(body.name);
-    return file.path;
+  @Get(':id')
+  getUser(@Param('id', ParseIntPipe) id: number) {
+    return this.userService.findOne(id);
   }
 }
