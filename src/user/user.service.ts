@@ -59,7 +59,9 @@ export class UserService {
   findAllWithFilters(name: string, auth: User) {
     return this.prisma.user.findMany({
       where: {
-        name,
+        name: {
+          contains: name
+        },
         companyId: auth.companyId,
         isBusinessPartner: false,
         id: { not: auth.id },
