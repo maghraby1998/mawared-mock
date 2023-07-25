@@ -1,6 +1,8 @@
 import {
+  BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -21,7 +23,7 @@ export class OfficeController {
 
   @Post()
   createOffice(@Body() body: CreateOfficeDto, @Auth() auth: User) {
-    return this.officeService.create(body, auth);
+    return this.officeService.createOrUpdate(body, auth);
   }
 
   @Get('/options')
@@ -40,5 +42,18 @@ export class OfficeController {
     @Auth() auth: User,
   ) {
     return this.officeService.findManyWithNameFilter(name, auth);
+  }
+
+  @Delete(':id')
+  async deleteOffice(@Param('id', ParseIntPipe) id: number) {
+    const office = await this.officeService.findOne(id);
+
+    if (office.users.length) {
+      throw new BadRequestException(
+        `Can't delete (${office.name}) office, because it has (${office.users.length}) employees`,
+      );
+    }
+
+    return this.officeService.delete(id);
   }
 }

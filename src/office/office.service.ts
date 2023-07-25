@@ -7,14 +7,26 @@ import { CreateOfficeDto } from './dtos/create-office.dto';
 export class OfficeService {
   constructor(private prisma: PrismaService) {}
 
-  create({ currencyId, ...officeInput }: CreateOfficeDto, auth: User) {
-    return this.prisma.office.create({
-      data: {
-        ...officeInput,
-        company: { connect: { id: auth.companyId } },
-        currency: { connect: { id: currencyId } },
-      },
-    });
+  createOrUpdate(
+    { currencyId, id, ...officeInput }: CreateOfficeDto,
+    auth: User,
+  ) {
+    let officeInputData = {
+      ...officeInput,
+      company: { connect: { id: auth.companyId } },
+      currency: { connect: { id: currencyId } },
+    };
+
+    if (id) {
+      return this.prisma.office.update({
+        where: { id: +id },
+        data: officeInputData,
+      });
+    } else {
+      return this.prisma.office.create({
+        data: officeInputData,
+      });
+    }
   }
 
   findOne(id: number) {
@@ -22,6 +34,11 @@ export class OfficeService {
       where: { id },
       include: {
         company: true,
+        users: {
+          select: {
+            _count: true,
+          },
+        },
       },
     });
   }
@@ -53,6 +70,12 @@ export class OfficeService {
         id: true,
         name: true,
       },
+    });
+  }
+
+  delete(id: number) {
+    return this.prisma.office.delete({
+      where: { id },
     });
   }
 }

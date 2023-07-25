@@ -1,4 +1,5 @@
 import {
+  IsBoolean,
   IsEmail,
   IsNumber,
   IsOptional,
@@ -8,14 +9,18 @@ import {
 
 export class CreateUserDto {
   @IsString()
+  @IsOptional()
+  id: string;
+
+  @IsString()
   name: string;
 
   @IsEmail()
   email: string;
 
-  @IsString()
-  @MinLength(8)
-  password: string;
+  // @IsString()
+  // @MinLength(8)
+  // password: string;
 
   @IsNumber()
   @IsOptional()
@@ -29,4 +34,8 @@ export class CreateUserDto {
 
   @IsString()
   positionId: number;
+
+  // @IsBoolean()
+  @IsOptional()
+  removeImage: boolean;
 }

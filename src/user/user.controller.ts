@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   FileTypeValidator,
   Get,
   MaxFileSizeValidator,
@@ -38,6 +39,7 @@ export class UserController {
     @UploadedFile(
       new ParseFilePipe({
         validators: [new FileTypeValidator({ fileType: 'image/jpeg' })],
+        fileIsRequired: false,
       }),
     )
     file: Express.Multer.File,
@@ -74,5 +76,10 @@ export class UserController {
   @Get(':id')
   getUser(@Param('id', ParseIntPipe) id: number) {
     return this.userService.findOne(id);
+  }
+
+  @Delete(':id')
+  deleteUser(@Param('id', ParseIntPipe) id: number) {
+    return this.userService.delete(id);
   }
 }

@@ -19,13 +19,15 @@ export class AuthService {
 
   async createUser(
     {
+      id,
       managerId,
       name,
       email,
       departmentId,
-      password,
+      // password,
       officeId,
       positionId,
+      removeImage,
     }: CreateUserDto,
     auth: User,
     image: Express.Multer.File,
@@ -40,17 +42,23 @@ export class AuthService {
     }
 
     const saltOrRounds = 10;
-    const hash = await bcrypt.hash(password, saltOrRounds);
+    const hash = await bcrypt.hash('123456', saltOrRounds);
 
-    return this.userService.create({
+    let input = {
       name,
       email,
       password: hash,
       office: { connect: { id: +officeId } },
       department: { connect: { id: +departmentId } },
       position: { connect: { id: +positionId } },
-      image_path: image.buffer.toString('base64'),
       userType: { connect: { id: UserTypeEnum.EMPLOYEE } },
+      ...(removeImage
+        ? { image_path: null }
+        : image == undefined
+        ? null
+        : {
+            image_path: image ? image.buffer.toString('base64') : null,
+          }),
       ...(managerId && {
         manager: {
           connect: {
@@ -65,7 +73,13 @@ export class AuthService {
           },
         },
       }),
-    });
+    };
+
+    if (id) {
+      return this.userService.update(+id, input);
+    } else {
+      return this.userService.create(input);
+    }
   }
 
   async signIn(email: string, password: string) {
